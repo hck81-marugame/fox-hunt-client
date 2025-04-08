@@ -1,8 +1,15 @@
+import { BrowserRouter, Route, Routes } from "react-router";
+import LoginPage from "./pages/LoginPage";
+
 function App() {
   return (
-    <>
-      <h1>testttt</h1>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route>
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
