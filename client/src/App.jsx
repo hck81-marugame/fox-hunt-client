@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
-import GamePage from "./pages/GamePage";
+import GameOverPage from "./pages/GameOverPage";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="/game" element={<GamePage />} />
+          <Route path="/game-over" element={<GameOverPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
