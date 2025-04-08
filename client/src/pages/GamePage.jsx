@@ -1,26 +1,31 @@
 import "../styles/game.css";
 import ImageHome from "../assets/home.png";
-import ImageAk47 from "../assets/ak47.png";
+// import ImageAk47 from "../assets/ak47.png";
+import { useNavigate } from "react-router";
 export default function GamePage() {
+  const navigate = useNavigate();
+  function goToHome() {
+    navigate("/");
+  }
   return (
-    <>
+    <div id="game-page">
       <div id="header">
-        <img id="home-button" onclick="goToHome()" src={ImageHome} alt="home" />
-        <h1>
+        <img id="home-button" onClick={goToHome} src={ImageHome} alt="home" />
+        <span>
           Time:{" "}
           <span className="value" id="timer">
             0
           </span>
-        </h1>
-        <h1>
+        </span>
+        <span>
           Score:{" "}
           <span className="value" id="score">
             0
           </span>
-        </h1>
+        </span>
       </div>
-      <div id="game-area" />
-      <div id="gun-area">
+      <div id="game-area"></div>
+      {/* <div id="gun-area">
         <img id="gun" src={ImageAk47} alt="ak47" />
       </div>
       <div id="congratulations-modal">
@@ -57,7 +62,7 @@ export default function GamePage() {
             Submit
           </button>
         </div>
-      </div>
-    </>
+      </div> */}
+    </div>
   );
 }
