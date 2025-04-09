@@ -3,10 +3,11 @@ import ImageHome from "../assets/home.png";
 import { useNavigate } from "react-router";
 import { useRef, useEffect, useState } from "react";
 import Swiper from "../components/Swiper";
+import { useScore } from "../contexts/Score.context";
 export default function GamePage() {
   const navigate = useNavigate();
   const audioRef = useRef(null);
-  const [score, setScore] = useState(0);
+  const { score, increaseScore } = useScore();
   const [swipers, setSwipers] = useState([]);
   const [timeLeft, setTimeLeft] = useState(20);
 
@@ -51,6 +52,7 @@ export default function GamePage() {
 
     if (timeLeft === 0) {
       clearInterval(swiperInterval); // Stop swiper spawning when timeLeft reaches 0
+      navigate("/game-over");
     }
 
     return () => {
@@ -60,7 +62,7 @@ export default function GamePage() {
   }, [timeLeft]);
 
   function handleSwiperClick(id) {
-    setScore((prevScore) => prevScore + 100);
+    increaseScore(100);
     setSwipers((prevSwipers) => {
       return prevSwipers.filter((swiperId) => {
         return swiperId !== id;
