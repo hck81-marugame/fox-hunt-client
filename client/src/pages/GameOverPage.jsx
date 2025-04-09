@@ -1,17 +1,41 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
+import Confetti from "react-confetti";
 
 export default function GameOverPage() {
   const navigate = useNavigate();
   const audioRef = useRef(null);
+  const [windowDimension, setWindowDimension] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+  const [showConfetti, setShowConfetti] = useState(true);
 
   useEffect(() => {
-    // Create audio element
+    const handleResize = () => {
+      setWindowDimension({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowConfetti(false);
+    }, 10000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     audioRef.current = new Audio("/src/assets/winning.mp3");
     audioRef.current.volume = 0.4;
     audioRef.current.play().catch((e) => console.log("Audio play failed:", e));
 
-    // Cleanup function to stop audio when component unmounts
     return () => {
       if (audioRef.current) {
         audioRef.current.pause();
@@ -27,6 +51,16 @@ export default function GameOverPage() {
 
   return (
     <>
+      {showConfetti && (
+        <Confetti
+          width={windowDimension.width}
+          height={windowDimension.height}
+          recycle={true}
+          numberOfPieces={200}
+          gravity={0.2}
+          colors={["#FF8C00", "#FFA500", "#FFD700", "#FFFF00", "#32CD32"]}
+        />
+      )}
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-100 to-orange-300">
         <div className="bg-white p-8 rounded-2xl shadow-lg max-w-xl w-full text-center">
           <h1 className="text-6xl font-bold mb-6">🦊 Game Over 🦊</h1>
