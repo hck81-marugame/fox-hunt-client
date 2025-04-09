@@ -1,11 +1,15 @@
 import "../styles/game.css";
 import ImageHome from "../assets/home.png";
-// import ImageAk47 from "../assets/ak47.png";
 import { useNavigate } from "react-router";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import Swiper from "../components/Swiper";
 export default function GamePage() {
   const navigate = useNavigate();
   const audioRef = useRef(null);
+  const [score, setScore] = useState(0);
+  const [swipers, setSwipers] = useState([]);
+  const [timeLeft, setTimeLeft] = useState(20);
+
   function goToHome() {
     navigate("/");
   }
@@ -22,6 +26,48 @@ export default function GamePage() {
     };
   }, []);
 
+  useEffect(() => {
+    const countdownInterval = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(countdownInterval); // Stop countdown when time reaches 0
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000); // Countdown every 1000ms
+
+    const swiperInterval = setInterval(() => {
+      const newSwiperId = new Date().getTime().toString();
+      setSwipers((prevSwipers) => [...prevSwipers, newSwiperId]);
+
+      // Set a timeout to remove the swiper after 5000ms
+      setTimeout(() => {
+        setSwipers((prevSwipers) =>
+          prevSwipers.filter((swiperId) => swiperId !== newSwiperId)
+        );
+      }, 5000);
+    }, 500); // Spawn swipers every 500ms
+
+    if (timeLeft === 0) {
+      clearInterval(swiperInterval); // Stop swiper spawning when timeLeft reaches 0
+    }
+
+    return () => {
+      clearInterval(countdownInterval); // Cleanup countdown interval
+      clearInterval(swiperInterval); // Cleanup swiper interval
+    };
+  }, [timeLeft]);
+
+  function handleSwiperClick(id) {
+    setScore((prevScore) => prevScore + 100);
+    setSwipers((prevSwipers) => {
+      return prevSwipers.filter((swiperId) => {
+        return swiperId !== id;
+      });
+    });
+  }
+
   return (
     <div id="game-page">
       <div id="header">
@@ -29,55 +75,29 @@ export default function GamePage() {
         <span>
           Time:{" "}
           <span className="value" id="timer">
-            0
+            {timeLeft}
           </span>
         </span>
-        <span>
-          Score:{" "}
-          <span className="value" id="score">
-            0
+        <div id="score-area">
+          <span>
+            My Score:{" "}
+            <span className="value" id="score">
+              {score}
+            </span>
           </span>
-        </span>
-      </div>
-      <div id="game-area"></div>
-      {/* <div id="gun-area">
-        <img id="gun" src={ImageAk47} alt="ak47" />
-      </div>
-      <div id="congratulations-modal">
-        <div className="modal-content">
-          <h1 id="congratulations-message">Congratulations!</h1>
-          <p>
-            Your score is{" "}
-            <span className="value" id="final-score">
+          <span>
+            Opponent Score:{" "}
+            <span className="value" id="score">
               0
             </span>
-            !
-          </p>
-          <div className="coolinput">
-            <label htmlFor="input" className="text">
-              Name:
-            </label>
-            <input
-              id="name-input"
-              type="text"
-              placeholder="Write here..."
-              name="input"
-              className="input"
-            />
-          </div>
-          <button className="modal-btn" onclick="location.reload();">
-            Retry
-          </button>
-          <button
-            id="submit-btn"
-            className="modal-btn"
-            onclick="submitHighScore()"
-            disabled=""
-          >
-            Submit
-          </button>
+          </span>
         </div>
-      </div> */}
+      </div>
+      <div id="game-area">
+        {swipers.map((id) => {
+          return <Swiper key={id} onClick={() => handleSwiperClick(id)} />;
+        })}
+      </div>
     </div>
   );
 }
