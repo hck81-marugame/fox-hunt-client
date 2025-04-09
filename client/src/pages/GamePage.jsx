@@ -2,11 +2,26 @@ import "../styles/game.css";
 import ImageHome from "../assets/home.png";
 // import ImageAk47 from "../assets/ak47.png";
 import { useNavigate } from "react-router";
+import { useRef, useEffect } from "react";
 export default function GamePage() {
   const navigate = useNavigate();
+  const audioRef = useRef(null);
   function goToHome() {
     navigate("/");
   }
+
+  useEffect(() => {
+    audioRef.current = new Audio("/src/assets/swiper_theme.webm");
+    audioRef.current.play().catch((e) => console.log("Audio play failed:", e));
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      }
+    };
+  }, []);
+
   return (
     <div id="game-page">
       <div id="header">
