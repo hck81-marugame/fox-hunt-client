@@ -7,7 +7,7 @@ import { useScore } from "../contexts/Score.context";
 export default function GamePage() {
   const navigate = useNavigate();
   const audioRef = useRef(null);
-  const { score, increaseScore } = useScore();
+  const { scores, increaseScore, playerNames } = useScore();
   const [swipers, setSwipers] = useState([]);
   const [timeLeft, setTimeLeft] = useState(20);
 
@@ -62,7 +62,7 @@ export default function GamePage() {
   }, [timeLeft]);
 
   function handleSwiperClick(id) {
-    increaseScore(100);
+    increaseScore("player1", 100);
     setSwipers((prevSwipers) => {
       return prevSwipers.filter((swiperId) => {
         return swiperId !== id;
@@ -82,13 +82,13 @@ export default function GamePage() {
         </span>
         <div id="score-area">
           <span>
-            My Score:{" "}
+            {playerNames.player1}:{" "}
             <span className="value" id="score">
-              {score}
+              {scores.player1}
             </span>
           </span>
           <span>
-            Opponent Score:{" "}
+            {playerNames.player2}:{" "}
             <span className="value" id="score">
               0
             </span>
