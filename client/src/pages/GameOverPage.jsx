@@ -5,7 +5,7 @@ import { useScore } from "../contexts/Score.context";
 
 export default function GameOverPage() {
   const navigate = useNavigate();
-  const { score } = useScore();
+  const { scores, playerNames, resetPlayers } = useScore();
   const name = localStorage.getItem("name");
 
   const audioRef = useRef(null);
@@ -50,6 +50,7 @@ export default function GameOverPage() {
 
   function goHome() {
     localStorage.removeItem("name");
+    resetPlayers();
     navigate("/login");
   }
 
@@ -71,19 +72,19 @@ export default function GameOverPage() {
           <div className="mb-6">
             <h2 className="text-4xl font-semibold text-green-400">🏆 Winner</h2>
             <p className="text-2xl mt-2">
-              Name: <span className="font-bold">{name}</span>
+              Name: <span className="font-bold">{playerNames.player1}</span>
             </p>
             <p className="text-2xl">
-              Score: <span className="font-bold">{score}</span>
+              Score: <span className="font-bold">{scores.player1}</span>
             </p>
           </div>
           <div className="mb-8">
             <h2 className="text-2xl font-semibold text-red-400">💀 Loser</h2>
             <p className="text-xl mt-2">
-              Name: <span className="font-bold">Player2</span>
+              Name: <span className="font-bold">{playerNames.player2}</span>
             </p>
             <p className="text-xl">
-              Score: <span className="font-bold">850</span>
+              Score: <span className="font-bold">{scores.player2}</span>
             </p>
           </div>
           <button
