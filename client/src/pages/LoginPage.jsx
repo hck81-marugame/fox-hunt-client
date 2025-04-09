@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-
+import axios from "axios";
 export default function LoginPage() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
@@ -24,6 +24,11 @@ export default function LoginPage() {
     }
     localStorage.setItem("name", name.trim());
     navigate("/");
+  }
+
+  async function handleGenerateName() {
+    const response = await axios.get("http://localhost:3000/generate-name");
+    setName(response.data);
   }
 
   return (
@@ -55,12 +60,22 @@ export default function LoginPage() {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300"
-          >
-            Login
-          </button>
+          <div className="flex gap-4">
+            <button
+              type="button"
+              onClick={handleGenerateName}
+              className="w-50 flex-auto bg-gradient-to-r from-pink-400 via-orange-400 to-yellow-300 hover:from-pink-500 hover:via-orange-500 hover:to-yellow-400 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300"
+            >
+              Generate Name
+            </button>
+
+            <button
+              type="submit"
+              className="w-50 flex-auto bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition duration-300"
+            >
+              Login
+            </button>
+          </div>
         </form>
       </div>
     </div>
