@@ -1,14 +1,23 @@
 import "../styles/home.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import { useRoom } from "../contexts/Room.context";
+import Swal from "sweetalert2";
 
 export default function HomePage() {
   const navigate = useNavigate();
   const audioRef = useRef(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState(null);
+  const { room, setRoom, resetRoom } = useRoom();
 
   function goToGame() {
+    if (!room) {
+      return Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please select a room first!",
+      });
+    }
     navigate("/game");
   }
 
@@ -21,7 +30,7 @@ export default function HomePage() {
   }
 
   function selectRoom(room) {
-    setSelectedRoom(room);
+    setRoom(room);
     setIsDropdownOpen(false);
   }
 
@@ -59,7 +68,7 @@ export default function HomePage() {
       <div className="button-border">
         <div className="button-base">
           <button className="button" type="button" onClick={toggleDropdown}>
-            {selectedRoom ? `ROOM ${selectedRoom}` : "SELECT ROOM"}
+            {room ? `ROOM ${room}` : "SELECT ROOM"}
           </button>
 
           {isDropdownOpen && (

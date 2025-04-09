@@ -4,21 +4,24 @@ import HomePage from "./pages/HomePage";
 import GameOverPage from "./pages/GameOverPage";
 import GamePage from "./pages/GamePage";
 import Layout from "./layouts/layout";
+import { RoomProvider } from "./contexts/Room.context";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/" element={<Layout />}>
-            <Route path="/game" element={<GamePage />} />
-            <Route path="/game-over" element={<GameOverPage />} />
+    <RoomProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Layout />}>
+              <Route path="/game" element={<GamePage />} />
+              <Route path="/game-over" element={<GameOverPage />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </RoomProvider>
   );
 }
 
