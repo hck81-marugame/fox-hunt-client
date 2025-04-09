@@ -1,9 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import Confetti from "react-confetti";
+import { useScore } from "../contexts/Score.context";
 
 export default function GameOverPage() {
   const navigate = useNavigate();
+  const { score } = useScore();
+  const name = localStorage.getItem("name");
+
   const audioRef = useRef(null);
   const [windowDimension, setWindowDimension] = useState({
     width: window.innerWidth,
@@ -67,10 +71,10 @@ export default function GameOverPage() {
           <div className="mb-6">
             <h2 className="text-4xl font-semibold text-green-400">🏆 Winner</h2>
             <p className="text-2xl mt-2">
-              Name: <span className="font-bold">Player1</span>
+              Name: <span className="font-bold">{name}</span>
             </p>
             <p className="text-2xl">
-              Score: <span className="font-bold">1200</span>
+              Score: <span className="font-bold">{score}</span>
             </p>
           </div>
           <div className="mb-8">

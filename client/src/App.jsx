@@ -12,8 +12,8 @@ function App() {
         <Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="/game" element={<Layout />}>
-            <Route index element={<GamePage />} />
+          <Route path="/" element={<Layout />}>
+            <Route path="/game" element={<GamePage />} />
             <Route path="/game-over" element={<GameOverPage />} />
           </Route>
         </Route>
