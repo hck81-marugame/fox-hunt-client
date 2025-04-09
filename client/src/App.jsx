@@ -3,6 +3,7 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import GameOverPage from "./pages/GameOverPage";
 import GamePage from "./pages/GamePage";
+import Layout from "./layouts/layout";
 
 function App() {
   return (
@@ -11,8 +12,10 @@ function App() {
         <Route>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<HomePage />} />
-          <Route path="/game" element={<GamePage />} />
-          <Route path="/game-over" element={<GameOverPage />} />
+          <Route path="/game" element={<Layout />}>
+            <Route index element={<GamePage />} />
+            <Route path="/game-over" element={<GameOverPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
