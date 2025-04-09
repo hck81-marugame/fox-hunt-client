@@ -4,6 +4,9 @@ import { useNavigate } from "react-router";
 import { useRef, useEffect, useState } from "react";
 import Swiper from "../components/Swiper";
 import { useScore } from "../contexts/Score.context";
+import ak47Sound from "../assets/ak47_sound.webm";
+import swiperOhMan from "../assets/swiper_oh_man.mp3";
+
 export default function GamePage() {
   const navigate = useNavigate();
   const audioRef = useRef(null);
@@ -61,7 +64,27 @@ export default function GamePage() {
     };
   }, [timeLeft]);
 
+  useEffect(() => {
+    const gameArea = document.getElementById("game-area");
+
+    function handleMouseDown() {
+      const mouseDownAudio = new Audio(ak47Sound);
+      mouseDownAudio.play().catch((e) => console.log("Audio play failed:", e));
+    }
+
+    gameArea.addEventListener("mousedown", handleMouseDown);
+
+    return () => {
+      gameArea.removeEventListener("mousedown", handleMouseDown); // Cleanup listener
+    };
+  }, []);
+
   function handleSwiperClick(id) {
+    const swiperClickAudio = new Audio(swiperOhMan); // Create a new Audio instance
+    swiperClickAudio.volume = 0.5; // Reduce the volume to 50%
+    swiperClickAudio.currentTime = 0.5; // Skip the first half-second
+    swiperClickAudio.play().catch((e) => console.log("Audio play failed:", e)); // Play the sound
+
     increaseScore("player1", 100);
     setSwipers((prevSwipers) => {
       return prevSwipers.filter((swiperId) => {
