@@ -1,0 +1,92 @@
+html {
+  overflow: hidden;
+  height: 100%;
+}
+#game-page {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-image: url("../assets/game_background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: black;
+}
+#header {
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #f9a35a;
+  padding: 0 2em;
+  background-color: rgb(0, 92, 170, 0.5);
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.value {
+  color: #ffea8b;
+}
+
+#game-area {
+  cursor: url("../assets/aim_red-64x64px.png") 32 32, auto;
+  user-select: none;
+  flex-grow: 1;
+  position: relative;
+  width: 100%;
+}
+
+#score-area {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  text-align: end;
+}
+
+#home-button {
+  position: fixed;
+  height: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  filter: brightness(90%);
+}
+
+#home-button:hover {
+  filter: brightness(110%);
+}
+
+/* From Uiverse.io by kamehame-ha */
+.coolinput {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin: 20px auto;
+}
+
+.coolinput label.text {
+  font-size: 0.75rem;
+  color: #818cf8;
+  font-weight: 700;
+  position: relative;
+  top: 0.5rem;
+  margin: 0 0 0 7px;
+  padding: 0 3px;
+  background: #e8e8e8;
+  width: fit-content;
+}
+
+.coolinput input[type="text"].input {
+  padding: 11px 10px;
+  font-size: 0.75rem;
+  border: 2px #818cf8 solid;
+  border-radius: 5px;
+  background: #e8e8e8;
+}
+
+.coolinput input[type="text"].input:focus {
+  outline: none;
+}
