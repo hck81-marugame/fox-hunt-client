@@ -11,7 +11,7 @@ import { useRoom } from "../contexts/Room.context";
 import { api } from "../helpers/http-client";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:3000");
+const socket = io("https://marugame-server.azriltdkso.fun");
 
 export default function GamePage() {
   const navigate = useNavigate();
