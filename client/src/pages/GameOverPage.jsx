@@ -17,7 +17,7 @@ export default function GameOverPage() {
   const [showConfetti, setShowConfetti] = useState(true);
 
   useEffect(() => {
-    if (!playerNames.player1 || !playerNames.player2 || !scores.player1 || !scores.player2) {
+    if (!playerNames.player1 || !playerNames.player2) {
       setRoom(0);
       navigate("/");
     }
