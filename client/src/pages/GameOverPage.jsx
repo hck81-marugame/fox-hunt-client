@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import Confetti from "react-confetti";
 import { useScore } from "../contexts/Score.context";
 import { useRoom } from "../contexts/Room.context";
+import winning from "../assets/winning.mp3";
 
 export default function GameOverPage() {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ export default function GameOverPage() {
   }, []);
 
   useEffect(() => {
-    audioRef.current = new Audio("/src/assets/winning.mp3");
+    audioRef.current = new Audio(winning);
     audioRef.current.volume = 0.4;
     audioRef.current.play().catch((e) => console.log("Audio play failed:", e));
 

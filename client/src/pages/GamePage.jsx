@@ -6,6 +6,7 @@ import Swiper from "../components/Swiper";
 import { useScore } from "../contexts/Score.context";
 import ak47Sound from "../assets/ak47_sound.webm";
 import swiperOhMan from "../assets/swiper_oh_man.mp3";
+import swiper_theme from "../assets/swiper_theme.webm";
 import Swal from "sweetalert2";
 import { useRoom } from "../contexts/Room.context";
 import { api } from "../helpers/http-client";
@@ -50,7 +51,7 @@ export default function GamePage() {
   }
 
   useEffect(() => {
-    audioRef.current = new Audio("/src/assets/swiper_theme.webm");
+    audioRef.current = new Audio(swiper_theme);
     audioRef.current.play().catch((e) => console.log("Audio play failed:", e));
 
     return () => {
