@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { useRoom } from "../contexts/Room.context";
 import Swal from "sweetalert2";
 import { api } from "../helpers/http-client";
+import dora_trap_remix from "../assets/DORA_TRAP_REMIX.webm";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    audioRef.current = new Audio("/src/assets/Dora_TRAP_REMIX.webm");
+    audioRef.current = new Audio(dora_trap_remix);
     audioRef.current.loop = true;
     audioRef.current.play().catch((e) => console.log("Audio play failed:", e));
     if (!name) {
