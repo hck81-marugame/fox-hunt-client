@@ -2,11 +2,12 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import Confetti from "react-confetti";
 import { useScore } from "../contexts/Score.context";
+import { useRoom } from "../contexts/Room.context";
 
 export default function GameOverPage() {
   const navigate = useNavigate();
   const { scores, playerNames, resetPlayers } = useScore();
-  const name = localStorage.getItem("name");
+  const { setRoom } = useRoom();
 
   const audioRef = useRef(null);
   const [windowDimension, setWindowDimension] = useState({
@@ -14,6 +15,13 @@ export default function GameOverPage() {
     height: window.innerHeight,
   });
   const [showConfetti, setShowConfetti] = useState(true);
+
+  useEffect(() => {
+    if (!playerNames.player1 || !playerNames.player2 || !scores.player1 || !scores.player2) {
+      setRoom(0);
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,9 +57,9 @@ export default function GameOverPage() {
   }, []);
 
   function goHome() {
-    localStorage.removeItem("name");
     resetPlayers();
-    navigate("/login");
+    setRoom(0);
+    navigate("/");
   }
 
   return (
@@ -72,19 +80,39 @@ export default function GameOverPage() {
           <div className="mb-6">
             <h2 className="text-4xl font-semibold text-green-400">🏆 Winner</h2>
             <p className="text-2xl mt-2">
-              Name: <span className="font-bold">{playerNames.player1}</span>
+              Name:{" "}
+              <span className="font-bold">
+                {scores.player1 >= scores.player2
+                  ? playerNames.player1
+                  : playerNames.player2}
+              </span>
             </p>
             <p className="text-2xl">
-              Score: <span className="font-bold">{scores.player1}</span>
+              Score:{" "}
+              <span className="font-bold">
+                {scores.player1 >= scores.player2
+                  ? scores.player1
+                  : scores.player2}
+              </span>
             </p>
           </div>
           <div className="mb-8">
             <h2 className="text-2xl font-semibold text-red-400">💀 Loser</h2>
             <p className="text-xl mt-2">
-              Name: <span className="font-bold">{playerNames.player2}</span>
+              Name:{" "}
+              <span className="font-bold">
+                {scores.player1 >= scores.player2
+                  ? playerNames.player2
+                  : playerNames.player1}
+              </span>
             </p>
             <p className="text-xl">
-              Score: <span className="font-bold">{scores.player2}</span>
+              Score:{" "}
+              <span className="font-bold">
+                {scores.player1 >= scores.player2
+                  ? scores.player2
+                  : scores.player1}
+              </span>
             </p>
           </div>
           <button

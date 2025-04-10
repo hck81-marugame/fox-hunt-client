@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
-import axios from "axios";
+import { api } from "../helpers/http-client";
 export default function LoginPage() {
   const [name, setName] = useState("");
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function LoginPage() {
   }
 
   async function handleGenerateName() {
-    const response = await axios.get("http://localhost:3000/generate-name");
+    const response = await api.get("/generate-name");
     setName(response.data);
   }
 
