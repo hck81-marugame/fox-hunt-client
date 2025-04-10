@@ -11,8 +11,8 @@ export const ScoreProvider = ({ children }) => {
   });
 
   const [playerNames, setPlayerNames] = useState({
-    player1: localStorage.getItem("name") || "Player 1",
-    player2: "Player 2",
+    player1: null,
+    player2: null,
   });
 
   // Meningkatkan score pemain tertentu
@@ -38,8 +38,8 @@ export const ScoreProvider = ({ children }) => {
       player2: 0,
     });
     setPlayerNames({
-      player1: "Player 1",
-      player2: "Player 2",
+      player1: null,
+      player2: null,
     });
   };
 
@@ -47,8 +47,10 @@ export const ScoreProvider = ({ children }) => {
     <ScoreContext.Provider
       value={{
         scores,
+        setScores,
         playerNames,
         increaseScore,
+        setPlayerNames,
         setPlayerName,
         resetPlayers,
       }}

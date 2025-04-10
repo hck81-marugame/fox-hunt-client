@@ -3,14 +3,10 @@ import React, { createContext, useContext, useState } from "react";
 const RoomContext = createContext();
 
 export const RoomProvider = ({ children }) => {
-  const [room, setRoom] = useState(null);
-
-  const resetRoom = () => {
-    setRoom(null);
-  };
+  const [room, setRoom] = useState(0);
 
   return (
-    <RoomContext.Provider value={{ room, setRoom, resetRoom }}>
+    <RoomContext.Provider value={{ room, setRoom }}>
       {children}
     </RoomContext.Provider>
   );
